@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_ngay"
+        android:title="@string/action_ngay"
+        android:icon="@drawable/ngay"/>
+    <item
+        android:id="@+id/action_thang"
+        android:title="@string/action_thang"
+        android:icon="@drawable/thang"/>
+    <item
+        android:id="@+id/action_morong"
+        android:title="@string/action_morong"
+        android:icon="@drawable/morong"/>
+</menu>
