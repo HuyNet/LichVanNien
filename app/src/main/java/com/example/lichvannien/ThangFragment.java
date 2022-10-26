@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +42,8 @@ public class ThangFragment extends Fragment {
     SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy",vn);
     SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM",vn);
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy",vn);
+    DBOpenHelper dbOpenHelper;
+    AlertDialog alertDialog;
 
 
     List<Date> dates = new ArrayList<>();
@@ -72,7 +76,7 @@ public class ThangFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 AlertDialog.Builder builder= new AlertDialog.Builder(context);
                 builder.setCancelable(true);
-                View addView =LayoutInflater.from(adapterView.getContext()).inflate(R.layout.add_event_layout,null);
+                final View addView =LayoutInflater.from(adapterView.getContext()).inflate(R.layout.add_event_layout,null);
                 EditText EventName = addView.findViewById(R.id.event_id);
                 TextView EventTime = addView.findViewById(R.id.event_time);
                 ImageView SetTime= addView.findViewById(R.id.set_event_time);
@@ -97,16 +101,31 @@ public class ThangFragment extends Fragment {
                         },hours,minuts,false);
                     }
                 });
-
+                String date = dateFormat.format(dates.get(i));
+                String month = monthFormat.format(dates.get(i));
+                String year = yearFormat.format(dates.get(i));
                 AddEvent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                     SaveE
+                     SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year);
+                     SetUpCalendar();
+                     alertDialog.dismiss();
                     }
                 });
+                builder.setView(addView);
+                alertDialog = builder.create();
+                alertDialog.show();
+
             }
         });
         return view;
+    }
+    private void SaveEvent (String event,String time,String date,String month,String year){
+        dbOpenHelper = new DBOpenHelper(context);
+        SQLiteDatabase database=dbOpenHelper.getWritableDatabase();
+        dbOpenHelper.SaveEvent(event,time,date,month,year,database);
+        dbOpenHelper.close();
+        Toast.makeText(context,"Event saved",Toast.LENGTH_LONG).show();
     }
 
     private void SetUpCalendar(){
