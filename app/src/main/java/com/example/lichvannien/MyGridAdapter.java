@@ -20,8 +20,8 @@ public class MyGridAdapter extends ArrayAdapter {
     Calendar currentDate;
     List<Events> events;
     LayoutInflater inflater;
-    public MyGridAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
+    public MyGridAdapter(@NonNull Context context, List<Date> dates,Calendar currentDate,List<Events> events) {
+        super(context, R.layout.single_layout);
 
         this.dates=dates;
         this.currentDate=currentDate;
@@ -45,7 +45,7 @@ public class MyGridAdapter extends ArrayAdapter {
         View view = convertView;
         if( view == null)
         {
-            view = inflater.inflate(R.layout.single_layout,null);
+            view = inflater.inflate(R.layout.single_layout,parent,false);
         }
         if(displayMonth == currentMonth && displayYear==currentYear)
         {
@@ -55,10 +55,10 @@ public class MyGridAdapter extends ArrayAdapter {
         {
             view.setBackgroundColor(Color.parseColor("#cccccc"));
         }
-        TextView Day_Number = convertView.findViewById(R.id.calender_day);
+        TextView Day_Number = view.findViewById(R.id.calender_day);
         Day_Number.setText(String.valueOf(DayNo));
 
-        return convertView;
+        return view;
     }
 
     @Override

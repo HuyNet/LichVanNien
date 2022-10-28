@@ -45,7 +45,7 @@ public class ThangFragment extends Fragment {
     DBOpenHelper dbOpenHelper;
     AlertDialog alertDialog;
 
-
+    MyGridAdapter myGridAdapter;
     List<Date> dates = new ArrayList<>();
     List<Events> eventsList=new ArrayList<>();
     @Nullable
@@ -141,5 +141,7 @@ public class ThangFragment extends Fragment {
             dates.add(monthCalendar.getTime());
             monthCalendar.add(Calendar.DAY_OF_MONTH,1);
         }
+        myGridAdapter = new MyGridAdapter(context,dates,calendar,eventsList);
+        girdView.setAdapter(myGridAdapter);
     }
 }
