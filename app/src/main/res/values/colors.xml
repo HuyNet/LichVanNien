@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_selected_bottom_nav">#673AB7</color>
+    <color name="green">@android:color/holo_green_dark</color>
 </resources>
